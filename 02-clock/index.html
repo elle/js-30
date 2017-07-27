@@ -5,8 +5,7 @@
   <title>JS + CSS Clock</title>
   <style>
     html {
-      background:#018DED url(http://unsplash.it/1500/1000?image=881&blur=50);
-      background-size:cover;
+      background:#018DED;
       font-family:'helvetica neue';
       text-align: center;
       font-size: 10px;
@@ -49,6 +48,10 @@
       background:black;
       position: absolute;
       top:50%;
+      transform-origin: 100%; /* transform from right corner */
+      transform: rotate(90deg); /* default starting angle from 12 o'clock */
+      transition: all 0.5s;
+      transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
     }
   </style>
 </head>
@@ -62,8 +65,27 @@
   </div>
 
   <script>
+    const hourHand = document.querySelector(".hour-hand");
+    const minHand = document.querySelector(".min-hand");
+    const secondHand = document.querySelector(".second-hand");
 
+    function setTime() {
+      const now = new Date();
 
+      const hour = now.getHours();
+      const hourDegrees = ((hour / 12) * 360) + 90;
+      hourHand.style.transform = `rotate(${hourDegrees}deg)`;
+
+      const minute = now.getMinutes();
+      const minDegrees = ((minute / 60) * 360) + 90;
+      minHand.style.transform = `rotate(${minDegrees}deg)`;
+
+      const seconds = now.getSeconds();
+      const secondsDegrees = ((seconds / 60 ) * 360) + 90;
+      secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+    }
+
+    setInterval(setTime, 1000);
   </script>
 </body>
 </html>
