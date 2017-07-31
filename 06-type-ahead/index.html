@@ -16,37 +16,37 @@
   </form>
   <script>
     const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
-
-    let cities = [];
+    const searchInput = document.querySelector(".search");
+    const suggestions = document.querySelector(".suggestions");
+    const cities = [];
     const prom = fetch(endpoint)
       .then(blob => blob.json())
-      .then(data => cities = data);
-      //.then(data => cities.push(...data));
-    //console.log(prom);
+      .then(data => cities.push(...data));
 
     function formatNumber(x) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/, ",");
     }
 
-    function findMatches(wordToMatch, cities) {
+    function findMatches(word) {
       return cities.filter(place => {
         // figure out if city or state matches what was searched
-        const regex = new RegExp(wordToMatch, "gi");
+        const regex = new RegExp(word, "gi");
         return place.city.match(regex) || place.state.match(regex);
       })
     }
 
+    function highlightWord(word, fullString) {
+      const regex = new RegExp(word, "gi");
+      return fullString.replace(regex, `<span class="hl">${word}</span>`);
+    }
+
     function displayMatches() {
-      const matchArray = findMatches(this.value, cities);
-      const regex = new RegExp(this.value, "gi");
+      const wordToMatch = this.value;
+      const matchArray = findMatches(wordToMatch);
       // pluck the match to add a span so it is highlighed
       const html = matchArray.map(place => {
-        const cityName = place.city.replace(
-          regex, `<span class="hl">${this.value}</span>`
-        );
-        const stateName = place.state.replace(
-          regex, `<span class="hl">${this.value}</span>`
-        );
+        const cityName = highlightWord(wordToMatch, place.city);
+        const stateName = highlightWord(wordToMatch, place.state);
 
         return `
           <li>
@@ -55,12 +55,8 @@
           </li>
         `;
       }).join("");
-      console.log(html);
       suggestions.innerHTML = html;
     }
-
-    const searchInput = document.querySelector(".search");
-    const suggestions = document.querySelector(".suggestions");
 
     searchInput.addEventListener("change", displayMatches);
     searchInput.addEventListener("keyup", displayMatches);
