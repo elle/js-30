@@ -3,17 +3,83 @@
 <head>
   <meta charset="UTF-8">
   <title>HTML5 Canvas</title>
-</head>
-<body>
-<canvas id="draw" width="800" height="800"></canvas>
-<script>
-</script>
-
 <style>
   html, body {
     margin:0;
   }
 </style>
+</head>
+<body>
+  <canvas id="draw" width="800" height="800"></canvas>
 
+  <script>
+    const canvas = document.querySelector("#draw");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth; // sets the canvas to full window size
+    canvas.height = window.innerHeight; // same ^
+
+    ctx.strokeStyle = "#BADA55"; // start stroke with default colour
+    ctx.lineJoin = "round"; // where line sqaures off will be round
+    ctx.lineCap = "round";
+    ctx.lineWidth = 100; // thicker line
+    // blend as you draw on top of previously drawn colours
+    // just like blend modes in Photoshop
+    //ctx.globalCompositeOperation = "multiply";
+
+    let isDrawing = false; // when you click down, we set this to true
+    let lastX = 0;
+    let lastY = 0;
+    let hue = 0; // start the color as red
+    let direction = true;
+
+    function draw(e) {
+      if (!isDrawing) return; //stop fn from running when they are not moused down
+
+      console.log(e);
+      // start colour on line 30 and as we fraw, re-set the colour
+      // but once we finish with `draw()`, increment the hue with `hue++` line 55
+      ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+
+      // ctx (context) is where we do all our drawings
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY); // start from
+      ctx.lineTo(e.offsetX, e.offsetY); // go to 
+      ctx.stroke(); // won't see anything on the page from prev 3 lines until we run this `stroke()` function
+
+      // when we are done with the `draw()` function
+      // we want to update the last X and Y position
+      //lastX = e.offsetX;
+      //lastY = e.offsetY;
+      [lastX, lastY] = [e.offsetX, e.offsetY]; // ES6 trick called destructering an array
+      hue++;
+      // reset the value of hue again
+      if (hue >= 360) {
+        hue = 0;
+      }
+      // for every loop, we will increment the `lineWidth`
+      if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
+        direction = !direction; // flip direction
+      }
+
+      if (direction) {
+        ctx.lineWidth++;
+      } else {
+        ctx.lineWidth--;
+      }
+    }
+
+    canvas.addEventListener("mousemove", draw);
+    canvas.addEventListener("mousedown", (e) => {
+      isDrawing = true;
+      // when you click down, before we do a `mousemove`
+      // `mousedown` will happen
+      // and we position the start of the brush
+      // where we want to go
+      [lastX, lastY] = [e.offsetX, e.offsetY];
+    });
+    canvas.addEventListener("mouseup", () => isDrawing = false);
+    canvas.addEventListener("mouseout", () => isDrawing = false);
+  </script>
 </body>
 </html>
