@@ -9,37 +9,73 @@
   <p onClick="makeGreen()">×BREAK×DOWN×</p>
 
   <script>
-    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+    const dogs = [{ name: "Snickers", age: 2 }, { name: "hugo", age: 8 }];
 
     function makeGreen() {
-      const p = document.querySelector('p');
-      p.style.color = '#BADA55';
-      p.style.fontSize = '50px';
+      const p = document.querySelector("p");
+      p.style.color = "#BADA55";
+      p.style.fontSize = "50px";
     }
 
     // Regular
+    console.log("Hello");
 
     // Interpolated
+    console.log("Hello I am an %s string!", "interpolated");
 
     // Styled
+    //console.log("%c A styled text", "font-size: 50px");
 
     // warning!
+    console.warn("OH NO");
 
     // Error :|
+    console.error("Bugger!");
 
     // Info
+    console.info("Fish are our friends");
 
     // Testing
+    const p = document.querySelector("p");
+    console.assert(p.classList.contains("ouch!"), "Wrong element");
 
     // clearing
+    console.clear();
 
     // Viewing DOM Elements
+    console.dir(p);
 
     // Grouping together
+    dogs.forEach(dog => {
+      console.groupCollapsed(dog.name);
+      console.log(`This is ${dog.name}`);
+      console.log(`${dog.name} is ${dog.age} years old`);
+      console.log(`${dog.name} is ${dog.age * 7} dog years old`);
+      console.groupEnd(dog.name);
+    });
 
     // counting
+    console.count("Ginger");
+    console.count("Ginger");
+    console.count("Edward");
+    console.count("Ginger");
+    console.count("Ginger");
+    console.count("Edward");
+    console.count("Edward");
+    console.count("Edward");
+    console.count("Ginger");
+    console.count("Ginger");
+    console.count("Ginger");
+    console.count("Ginger");
 
     // timing
+    console.time("fetching data");
+    fetch("https://api.github.com/users/elle")
+      .then(data => data.json())
+      .then(data => {
+        console.timeEnd("fetching data");
+        console.log(data);
+      });
 
   </script>
 </body>
