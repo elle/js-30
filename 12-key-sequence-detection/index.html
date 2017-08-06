@@ -9,7 +9,7 @@
   <script>
     const pressed = [];
     const password = "password";
-    const secretCode = [
+    const secret = [
       "ArrowUp",
       "ArrowUp",
       "ArrowDown",
@@ -18,19 +18,20 @@
       "ArrowLeft",
       "ArrowRight",
       "ArrowRight",
+      "b",
       "a",
-      "b"
     ];
  
     window.addEventListener("keyup", (e) => {
-      console.log(e);
       pressed.push(e.key);
 
-      // trim the array to a max of 10 inputs
-      pressed.splice(-password.length - 1, pressed.length - password.length);
+      // trim the array to a max of `secret.length` inputs
+      pressed.splice(-secret.length - 1, pressed.length - secret.length);
 
       console.log(pressed);
-      if (pressed.join("").includes(password)) {
+
+      //if (pressed.join("").includes(password)) {
+      if (pressed.join("") == secret.join("")) {
         console.log("DING DING!");
       }
     });
