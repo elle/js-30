@@ -6,7 +6,34 @@
   <script type="text/javascript" src="http://www.cornify.com/js/cornify.js"></script>
 </head>
 <body>
-<script>
-</script>
+  <script>
+    const pressed = [];
+    const password = "password";
+    const secretCode = [
+      "ArrowUp",
+      "ArrowUp",
+      "ArrowDown",
+      "ArrowDown",
+      "ArrowLeft",
+      "ArrowLeft",
+      "ArrowRight",
+      "ArrowRight",
+      "a",
+      "b"
+    ];
+ 
+    window.addEventListener("keyup", (e) => {
+      console.log(e);
+      pressed.push(e.key);
+
+      // trim the array to a max of 10 inputs
+      pressed.splice(-password.length - 1, pressed.length - password.length);
+
+      console.log(pressed);
+      if (pressed.join("").includes(password)) {
+        console.log("DING DING!");
+      }
+    });
+  </script>
 </body>
 </html>
