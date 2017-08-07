@@ -244,6 +244,35 @@
       };
     }
 
+    const sliderImages = document.querySelectorAll(".slide-in");
+
+    function checkSlide(e) {
+      console.log(window.scrollY);
+
+      sliderImages.forEach(sliderImage => {
+        // half way through the image
+        const slideInAt = (
+          window.scrollY + window.innerHeight
+        ) + sliderImage.height / 2;
+
+        // bottom of the image
+        const imageBottom = sliderImage.offsetTop + sliderImage.height;
+
+        // need to check if the image is half shown
+        const isHalfShown = slideInAt > sliderImage.offsetTop;
+        // not scrolled all the way past the image
+        // because if we are, we need to slide it out again
+        const isNotScrolledPast = window.scrollY < imageBottom;
+
+        if(isHalfShown && isNotScrolledPast) {
+          sliderImage.classList.add("active");
+        } else {
+          sliderImage.classList.remove("active");
+        }
+      });
+    }
+
+    window.addEventListener("scroll", debounce(checkSlide));
   </script>
 </body>
 </html>
