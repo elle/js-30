@@ -12,7 +12,7 @@
     }
     *, *:before, *:after {box-sizing: inherit; }
 
-    svg {
+    .svg {
       fill:white;
       background: rgba(0,0,0,0.1);
       padding: 20px;
