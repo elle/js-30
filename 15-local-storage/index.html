@@ -16,12 +16,15 @@
     <form class="add-items">
       <input type="text" name="item" placeholder="Item Name" required>
       <input type="submit" value="+ Add Item">
+      <a href="#" class="clear-items">Clear items</a>
     </form>
   </div>
 
   <script>
     const addItems = document.querySelector('.add-items');
     const itemsList = document.querySelector('.plates');
+    const clearItems = addItems.querySelector(".clear-items");
+    const loadingText = itemsList.querySelector("li").innerText;
     // set items from localStorage, or if there are not, default to empty Array
     const items = JSON.parse(localStorage.getItem("items")) || [];
 
@@ -70,6 +73,13 @@
     function saveItems(items) {
       localStorage.setItem("items", JSON.stringify(items));
     }
+
+    function resetItems(e) {
+      e.preventDefault();
+      saveItems([]);
+      itemsList.innerHTML = loadingText;
+    }
+    clearItems.addEventListener("click", resetItems);
 
     addItems.addEventListener("submit", addItem);
     itemsList.addEventListener("click", toggleDone);
