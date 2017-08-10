@@ -38,13 +38,13 @@
       }
 
       items.push(item);
-      populateList(items, itemsList);
+      populateList(items);
       saveItems(items);
       this.reset();
     }
 
-    function populateList(plates = [], platesList) {
-      platesList.innerHTML = plates.map((plate, i) => {
+    function populateList(plates = []) {
+      itemsList.innerHTML = plates.map((plate, i) => {
         const done = plate.done ? "checked" : "";
         return `
           <li>
@@ -67,7 +67,7 @@
       // store in localStorage
       saveItems(items);
       // update what's on our page
-      populateList(items, itemsList);
+      populateList(items);
     }
 
     function saveItems(items) {
@@ -85,7 +85,7 @@
     itemsList.addEventListener("click", toggleDone);
 
     // populate list on page load
-    populateList(items, itemsList);
+    populateList(items);
   </script>
 </body>
 </html>
