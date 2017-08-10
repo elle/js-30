@@ -36,7 +36,7 @@
 
       items.push(item);
       populateList(items, itemsList);
-      localStorage.setItem("items", JSON.stringify(items));
+      saveItems(items);
       this.reset();
     }
 
@@ -62,9 +62,13 @@
       // change the property
       items[index].done = !items[index].done;
       // store in localStorage
-      localStorage.setItem("items", JSON.stringify(items));
+      saveItems(items);
       // update what's on our page
       populateList(items, itemsList);
+    }
+
+    function saveItems(items) {
+      localStorage.setItem("items", JSON.stringify(items));
     }
 
     addItems.addEventListener("submit", addItem);
@@ -75,4 +79,3 @@
   </script>
 </body>
 </html>
-
