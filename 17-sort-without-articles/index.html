@@ -17,7 +17,7 @@
     #bands {
       background: white;
       box-shadow: 0 0 0 20px rgba(0, 0, 0, 0.05);
-      font-size: 20px;
+      font-size: 12px;
       list-style: inside square;
       margin: auto;
       padding: 0;
@@ -26,7 +26,7 @@
 
     #bands li {
       border-bottom: 1px solid #efefef;
-      padding: 20px;
+      padding: 6px;
     }
 
     #bands li:last-child {
@@ -43,21 +43,37 @@
   <ul id="bands"></ul>
 
   <script>
-    const bands = [
-      'The Plot in You',
-      'The Devil Wears Prada',
-      'Pierce the Veil',
-      'Norma Jean',
-      'The Bled',
-      'Say Anything',
-      'The Midway State',
-      'We Came as Romans',
-      'Counterparts',
-      'Oh, Sleeper',
-      'A Skylit Drive',
-      'Anywhere But Here',
-      'An Old Dog',
+    const unsortedBands = [
+      "The Plot in You",
+      "The Devil Wears Prada",
+      "Pierce the Veil",
+      "Norma Jean",
+      "The Bled",
+      "Say Anything",
+      "The Midway State",
+      "We Came as Romans",
+      "Counterparts",
+      "Oh, Sleeper",
+      "A Skylit Drive",
+      "Anywhere But Here",
+      "An Old Dog",
     ];
+
+    function strip(bandName) {
+      return bandName.replace(/^(a |an |the)/i, "").trim();
+    }
+
+    const sortedBands = unsortedBands.sort((a, b) => (strip(a) > strip(b)) ? 1 : -1);
+    //const sortedBands = unsortedBands.sort(function(a, b){
+      //if (strip(a) > strip(b)) {
+      //  return 1
+      //} else {
+      //  return -1
+      //}
+    //});
+
+    document.querySelector("#bands").innerHTML =
+      sortedBands.map(band => `<li>${band}</li>`).join("");
   </script>
 
 </body>
