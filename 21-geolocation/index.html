@@ -58,7 +58,20 @@
   </h1>
 
   <script>
+    const arrow = document.querySelector(".arrow");
+    const speed = document.querySelector(".speed-value");
 
+    navigator.geolocation.watchPosition((data) => {
+      // success callback when someone gives us access to this data
+      // console.log(data);
+      speed.textContent = data.coords.speed;
+      arrow.style.transform = `rotate(${data.coords.heading}deg)`;
+
+      // error callback, when someone denies us access to this data
+      // so we need to run a new function
+    }, (err) => {
+      console.err(err);
+    });
   </script>
 </body>
 </html>
