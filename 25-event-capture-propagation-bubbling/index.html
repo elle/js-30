@@ -39,7 +39,21 @@
     <button></button>
 
     <script>
+      const divs = document.querySelectorAll("div");
 
+      function logText(e) {
+        //e.stopPropagation(); // stop bubbling!
+        // logs the class of all three divs, not just the middle one
+        console.log(this.classList.value);
+        // logs the three divs
+        console.log(this);
+      }
+
+      divs.forEach(div => div.addEventListener("click", logText, {
+        //capture: true,
+        capture: false,
+        once: true,
+      }));
     </script>
   </body>
 </html>
