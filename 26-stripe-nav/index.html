@@ -75,6 +75,8 @@
         display: block;
       }
 
+      /* because it is already shown with the display block (line 75) */
+      /* a second later, we change the opacity, to make the animation smoother */
       .trigger-enter-active .dropdown {
         opacity: 1;
       }
@@ -93,6 +95,7 @@
         width: 100px;
       }
 
+      /* the role to display the white background with the new `open` class */
       .dropdownBackground.open {
         opacity: 1;
       }
@@ -216,7 +219,52 @@
     </nav>
 
     <script>
-    </script>
+      const triggers = document.querySelectorAll(".cool > li");
+      const background = document.querySelector(".dropdownBackground");
+      const nav = document.querySelector("nav.top");
 
+      function handleEnter() {
+        // this is the li, which we add a class to
+        this.classList.add("trigger-enter");
+        setTimeout(() => {
+          // to counter act moving off the link in less than 150ms
+          if (this.classList.contains("trigger-enter")) {
+            this.classList.add("trigger-enter-active");
+          }
+        }, 150);
+        // another way to write the check above
+        //setTimeout(() =>  {
+        //  // if the first statement is true, then move to the second action
+        //  this.classList.contains("trigger-enter") && this.classList.add("trigger-enter-active")
+        //}, 150);
+        background.classList.add("open");
+
+        // we need dynamically find the correct dropdown for this link
+        const dropdown = this.querySelector(".dropdown");
+        const dropdownCoords = dropdown.getBoundingClientRect();
+        const navCoords = nav.getBoundingClientRect();
+
+        const coords = {
+          height: dropdownCoords.height,
+          width: dropdownCoords.width,
+          top: dropdownCoords.top - navCoords.top,
+          left: dropdownCoords.left - navCoords.left,
+        }
+
+        background.style.setProperty("height", `${coords.height}px`);
+        background.style.setProperty("width", `${coords.width}px`);
+        background.style.setProperty(
+          "transform", `translate(${coords.left}px, ${coords.top}px)`
+        );
+      }
+
+      function handleLeave() {
+        this.classList.remove("trigger-enter", "trigger-enter-active");
+        background.classList.remove("open");
+      }
+
+      triggers.forEach(trigger =>  trigger.addEventListener("mouseenter", handleEnter));
+      triggers.forEach(trigger =>  trigger.addEventListener("mouseleave", handleLeave));
+    </script>
   </body>
 </html>
