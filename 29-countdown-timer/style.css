@@ -1,0 +1,82 @@
+html {
+  background: #8E24AA;
+  background: linear-gradient(45deg,  #42a5f5 0%,#478ed1 50%,#0d47a1 100%);
+  box-sizing: border-box;
+  font-size: 10px;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: 'Inconsolata', monospace;
+  margin: 0;
+  text-align: center;
+}
+
+.display__time-left {
+  color: white;
+  font-size: 20rem;
+  font-weight: 100;
+  margin: 0;
+  text-shadow: 4px 4px 0 rgba(0,0,0,0.05);
+}
+
+.timer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.timer__controls {
+  display: flex;
+}
+
+.timer__controls > * {
+  flex: 1;
+}
+
+.timer__controls form {
+  display: flex;
+  flex: 1;
+}
+
+.timer__controls input {
+  border: 0;
+  flex: 1;
+  padding: 2rem;
+}
+
+.timer__button {
+  background: none;
+  background: rgba(0,0,0,0.1);
+  border-bottom: 3px solid rgba(0,0,0,0.2);
+  border-right: 1px solid rgba(0,0,0,0.2);
+  border: 0;
+  color: white;
+  cursor: pointer;
+  font-family: 'Inconsolata', monospace;
+  font-size: 2rem;
+  padding: 1rem;
+  text-transform: uppercase;
+}
+
+.timer__button:hover,
+.timer__button:focus {
+  background: rgba(0,0,0,0.2);
+  outline: 0;
+}
+
+.display {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+}
+
+.display__end-time {
+  color: white;
+  font-size: 4rem;
+}
