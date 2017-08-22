@@ -31,7 +31,7 @@ function timer(seconds) {
 function displayTimeLeft(seconds) {
   const minutes = Math.floor(seconds / 60);
   const remainderSeconds = seconds % 60;
-  const display = `${minutes}:${remainderSeconds < 10 ? "0" : "" }${remainderSeconds}`;
+  const display = formatTime(minutes, remainderSeconds);
   document.title = display;
   timerDisplay.textContent = display;
 }
@@ -42,7 +42,8 @@ function displayEndTime(timestamp) {
   // if we don't like military time
   // const adjustedHour = hour > 12 ? hour - 12 : hour;
   const minutes = end.getMinutes();
-  endTime.textContent = `Be Back At ${hour}:${minutes < 10 ? "0" : ""}${minutes}`;
+  const seconds = end.getSeconds();
+  endTime.textContent = `Be Back At ${hour}:${formatTime(minutes, seconds)}`;
 }
 
 function startTimer() {
@@ -64,3 +65,10 @@ document.customForm.addEventListener("submit", function(e) {
   // resets the form's input from the value that was added
   this.reset();
 });
+
+function formatTime(minutes, seconds) {
+  paddedMins = minutes < 10 ? `0${minutes}` : minutes;
+  paddedSecs = seconds < 10 ? `0${seconds}` : seconds;
+
+  return `${paddedMins}:${paddedSecs}`
+}
